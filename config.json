@@ -1,0 +1,11 @@
+{
+  "logging": {
+    "output_directory": null,
+    "filename": "keylog.txt",
+    "flush_on_delimiter": false,
+    "new_line_per_delimiter": false
+  },
+  "stealth": {
+    "hide_process": false
+  }
+}
