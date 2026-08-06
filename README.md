@@ -1,55 +1,80 @@
-# Keylogger
+# Keylogger Script
 
-A Python-based keystroke monitoring tool designed to capture and log inputs locally for endpoint security auditing and monitoring analysis.
-
-## Features & Configuration
-The script looks for a `config.json` file in the same directory. You can customize the following parameters:
-
-* `output_directory`: The path where the log file will be saved. If left blank (`""`), it defaults to the directory where `main.py` is located.
-* `filename`: The name of the generated log file.
-* `flush_on_delimiter`: Buffers inputs and writes to the file only when a delimiter key is pressed.
-* `new_line_per_delimiter`: Starts a fresh line in the log file after every delimiter.
-* `stealth_mode`: *Planned feature (currently unavailable).*
-
-### Key Sanitization Mapping
-To ensure the log file remains clean and highly readable, special keys are dynamically captured and mapped to explicit text tags:
-
-| Key | Log Output |
-| :--- | :--- |
-| `Enter` | `\n` (Actual Newline) |
-| `Space` | `" "` (Spacebar) |
-| `Backspace` | ` [BACKSPACE] ` |
-| `Tab` | ` [TAB] ` |
-| `Caps Lock` | ` [CAPS_LOCK] ` |
-| `Shift (Left/Right)` | ` [SHIFT] ` |
-| `Ctrl (Left/Right)` | ` [CTRL] ` |
-| `Alt / AltGr` | ` [ALT] ` |
-| `Delete` | ` [DELETE] ` |
-| `Escape` | ` [ESC] ` |
+A Python-based keystroke monitoring tool designed to capture and log inputs locally for endpoint security auditing and system analysis.
 
 ---
 
-## Installation & Usage
+## Features
 
-1. **Install dependencies:**
-   ```bash
-   pip install pynput
-2. **Run the script:**
-   ```bash
-   python main.py
-## Update Changelog
-- 6/26/2026 — Configuration & Formatting Overhaul
-  - 
-    - Added `config.json` file support for dynamic settings management (paths, naming, delimiter flushing, and layout options).
-    - Replaced inline string formatting checks with an optimized dictionary mapping layout.
-    - Cleaned up log representations for special modifiers (`Ctrl`, `Alt`, `Shift`, `Tab`, `Caps Lock`, etc.) to keep logs looking uniform and organized.
+* **Configurable Settings:** Manage log paths, filenames, and formatting through `config.json`.
+* **Delimiter Flushing:** Buffers keystrokes and writes to disk only when specific delimiter keys are pressed.
+* **Key Sanitization:** Automatically translates special keys (like `CTRL`, `SHIFT`, or `ENTER`) into clean, human-readable tags.
+* **Synchronous Handling:** Captures input on key press events to maintain strict chronological order during rapid typing.
 
-- 6/11/2026 — Race Condition Fix
-  - 
-    - **Issue:** Characters and phrases occasionally became scrambled or printed out of sequence during rapid typing.
-    - **Root Cause:** Input logs were bound to the asynchronous `on_release` listener event. Rapid typing overlapping caused thread blocks to record actions out of order.
-    - **Resolution:** Migrated character tracking entirely to the synchronous `on_press` event handler; deprecated `on_release`logic.
+---
 
-- 6/07/2026 — Basic Key Sanitization
-  - 
-    - Initial implementation of raw string scrubbing for basic keys (Enter, Backspace, Space) to improve general analytical output in keylog.txt.
+## Configuration (`config.json`)
+
+Customize the tool by updating the parameters in `config.json`:
+
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| `output_directory` | `string` | Save folder path. Leave as `""` to save in the script's directory. |
+| `filename` | `string` | Name of the output log file (e.g., `keylog.txt`). |
+| `flush_on_delimiter` | `boolean` | If `true`, writes logs only when a delimiter key is pressed. |
+| `new_line_per_delimiter` | `boolean` | If `true`, starts a new line after every delimiter. |
+| `stealth_mode` | `boolean` | *(Planned feature)* Toggles background execution mode. |
+
+### Key Output Mapping
+
+Special modifier keys are sanitized into explicit tags within the log file:
+
+| Key | Log Output | Key | Log Output |
+| :--- | :--- | :--- | :--- |
+| **Enter** | `\n` *(Newline)* | **Shift** | ` [SHIFT] ` |
+| **Space** | `" "` | **Ctrl** | ` [CTRL] ` |
+| **Backspace** | ` [BACKSPACE] ` | **Alt** | ` [ALT] ` |
+| **Tab** | ` [TAB] ` | **Delete** | ` [DELETE] ` |
+| **Caps Lock** | ` [CAPS_LOCK] ` | **Escape** | ` [ESC] ` |
+
+---
+
+## Installation & Setup
+
+### 1. Set Up Virtual Environment
+From the repository root folder, run:
+
+```bash
+# Create and activate virtual environment
+python3 -m venv venv
+source venv/bin/activate
+```
+
+### 2. Install Dependencies
+```bash
+pip install -r requirements.txt
+```
+
+### 3. Run the Tool
+Navigate to the directory and launch the script:
+
+```bash
+cd monitoring/keylogger
+python main.py
+```
+
+---
+
+## Changelog
+
+### [v1.1.0] - 2026-06-26
+* **Added:** `config.json` support for dynamic settings management (paths, naming, delimiter flushing).
+* **Improved:** Replaced inline string formatting with dictionary mapping.
+* **Updated:** Cleaned up log tags for special control keys (`CTRL`, `ALT`, `SHIFT`, etc.).
+
+### [v1.0.1] - 2026-06-11
+* **Fixed:** Resolved character scrambling caused by asynchronous `on_release` event handling.
+* **Changed:** Shifted key recording logic to synchronous `on_press` event handler.
+
+### [v1.0.0] - 2026-06-07
+* **Initial Release:** Implemented basic keylogging and sanitization (`ENTER`, `SPACE`, `BACKSPACE`).
