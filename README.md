@@ -17,13 +17,13 @@ A Python-based keystroke monitoring tool designed to capture and log inputs loca
 
 Customize the tool by updating the parameters in `config.json`:
 
-| Parameter | Type | Description |
-| :--- | :--- | :--- |
-| `output_directory` | `string` | Save folder path. Leave as `""` to save in the script's directory. |
-| `filename` | `string` | Name of the output log file (e.g., `keylog.txt`). |
-| `flush_on_delimiter` | `boolean` | If `true`, writes logs only when a delimiter key is pressed. |
-| `new_line_per_delimiter` | `boolean` | If `true`, starts a new line after every delimiter. |
-| `stealth_mode` | `boolean` | *(Planned feature)* Toggles background execution mode. |
+| Parameter | Type | Description | Default |
+| :--- | :--- | :--- | :---
+| `output_directory` | `string` | Save folder path. Leave as `""` to save in the script's directory. | null |
+| `filename` | `string` | Name of the output log file (e.g., `keylog.txt`). | keylog.txt |
+| `flush_on_delimiter` | `boolean` | If `true`, writes logs only when a delimiter key is pressed. | false |
+| `new_line_per_delimiter` | `boolean` | If `true`, starts a new line after every delimiter. | true |
+| `stealth_mode` | `boolean` | *(Planned feature)* Toggles background execution mode. | false |
 
 ### Key Output Mapping
 
@@ -40,27 +40,51 @@ Special modifier keys are sanitized into explicit tags within the log file:
 ---
 
 ## Installation & Setup
+### Requirements:
+- python3-venv
+python3
+If the above following is not installed yet, run this command:
+#### Linux:
+**1. Installing required packages and Extension**
+```bash
+sudo apt update
+sudo apt install python3 python3-venv -y
+```
 
-### 1. Set Up Virtual Environment
+**2. Set Up Virtual Environment**
 From the repository root folder, run:
-
 ```bash
 # Create and activate virtual environment
 python3 -m venv venv
 source venv/bin/activate
 ```
 
-### 2. Install Dependencies
+**3. Install Dependencies**
 ```bash
 pip install -r requirements.txt
 ```
 
-### 3. Run the Tool
+**4. Run the Tool**
 Navigate to the directory and launch the script:
 
 ```bash
 cd monitoring/keylogger
 python main.py
+```
+
+#### Windows:
+(Run the cmd as administrator)
+**1. Installing required application:**
+```cmd
+winget install Python.Python.3.14
+```
+**2. Activating the venv**
+```cmd
+.venv\Scripts\activate
+```
+**3. Run the tool**
+```cmd
+python3 main.py
 ```
 
 ---
