@@ -18,7 +18,7 @@ A Python-based keystroke monitoring tool designed to capture and log inputs loca
 Customize the tool by updating the parameters in `config.json`:
 
 | Parameter | Type | Description | Default |
-| :--- | :--- | :--- | :---
+| :--- | :--- | :--- | :--- | 
 | `output_directory` | `string` | Save folder path. Leave as `""` to save in the script's directory. | null |
 | `filename` | `string` | Name of the output log file (e.g., `keylog.txt`). | keylog.txt |
 | `flush_on_delimiter` | `boolean` | If `true`, writes logs only when a delimiter key is pressed. | false |
@@ -73,32 +73,43 @@ python main.py
 ```
 
 #### Windows:
-(Run the cmd as administrator)
+(Run the cmd as administrator)  
 **1. Installing required application:**
 ```cmd
 winget install Python.Python.3.14
 ```
-**2. Activating the venv**
+**2. Creating venv**
+```cmd
+python -m venv venv
+```
+**3. Installing dependencies*
+```cmd
+pip install -r requirements.txt
+```
+**4. Activating the venv**
 ```cmd
 .venv\Scripts\activate
 ```
-**3. Run the tool**
+**5. Run the tool**
 ```cmd
+cd keylogger
 python3 main.py
 ```
 
 ---
 
 ## Changelog
+### [v1.1.1] - 2026-10-02  
+- **Improve:** Code readability and improve `config.json` file simplicity
 
 ### [v1.1.0] - 2026-06-26
-* **Added:** `config.json` support for dynamic settings management (paths, naming, delimiter flushing).
-* **Improved:** Replaced inline string formatting with dictionary mapping.
-* **Updated:** Cleaned up log tags for special control keys (`CTRL`, `ALT`, `SHIFT`, etc.).
+- **Added:** `config.json` support for dynamic settings management (paths, naming, delimiter flushing).
+- **Improved:** Replaced inline string formatting with dictionary mapping.
+- **Updated:** Cleaned up log tags for special control keys (`CTRL`, `ALT`, `SHIFT`, etc.).
 
 ### [v1.0.1] - 2026-06-11
-* **Fixed:** Resolved character scrambling caused by asynchronous `on_release` event handling.
-* **Changed:** Shifted key recording logic to synchronous `on_press` event handler.
+- **Fixed:** Resolved character scrambling caused by asynchronous `on_release` event handling.
+- **Changed:** Shifted key recording logic to synchronous `on_press` event handler.
 
 ### [v1.0.0] - 2026-06-07
-* **Initial Release:** Implemented basic keylogging and sanitization (`ENTER`, `SPACE`, `BACKSPACE`).
+- **Initial Release:** Implemented basic keylogging and sanitization (`ENTER`, `SPACE`, `BACKSPACE`).
