@@ -1,7 +1,31 @@
 {
-"output_directory": null,
-"filename": "keylog.txt",
-"flush_on_delimiter": false,
-"new_line_per_delimiter": true,
-"hide_process": false
+    "logging": {
+        "output_directory": null,
+        "filename": "keylog.txt"
+    },
+    "format": {
+        "flush_only_on_flush_keys": false,
+        "newline_on_specific_keys_only": true,
+        "newline_after_every_key": true,
+        "timestamp_per_line": true
+    },
+    "keys": {
+        "newline_keys": ["backspace", "esc", "enter"],
+        "flush_keys": ["ctrl_r", "ctrl", "space", "backspace", "enter", "esc", "cmd", "tab"],
+        "key_map": {
+            "space": " ",
+            "enter": "[ENTER]",
+            "backspace": "[BACKSPACE]",
+            "tab": "[TAB]",
+            "caps_lock": "[CAPS_LOCK]",
+            "shift": "[SHIFT]",
+            "shift_r": "[SHIFT]",
+            "ctrl": "[CTRL]",
+            "ctrl_r": "[CTRL]",
+            "alt": "[ALT]",
+            "alt_gr": "[ALT]",
+            "delete": "[DELETE]",
+            "esc": "[ESC]"
+        }
+    }
 }
