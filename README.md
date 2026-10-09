@@ -77,23 +77,26 @@ python main.py
 (Run the cmd as administrator)  
 **1. Installing required application:**
 ```cmd
-winget install Python.Python.3.14
+winget install python
 ```
+
 **2. Creating venv**
 ```cmd
+cd keylogger
 python -m venv venv
 ```
-**3. Installing dependencies**
+
+**3. Activating the venv**
 ```cmd
-pip install -r requirements.txt
-```
-**4. Activating the venv**
+venv\Scripts\activate ```
+
+**4. Installing dependencies**
 ```cmd
-.venv\Scripts\activate
+python -m pip install -r requirements.txt
 ```
+
 **5. Run the tool**
 ```cmd
-cd keylogger
 python main.py
 ```
 
